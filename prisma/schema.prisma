@@ -1,0 +1,144 @@
+generator client {
+  provider = "prisma-client-js"
+}
+
+datasource db {
+  provider = "sqlite"
+  url      = env("DATABASE_URL")
+}
+
+model User {
+  id        String   @id @default(uuid())
+  email     String   @unique
+  name      String?
+  password  String?  // Hashed password
+  role      String   @default("USER") // ADMIN, ARTISAN, USER
+  donations Donation[]
+  orders    Order[]
+  impact    ImpactProfile?
+}
+
+model ImpactProfile {
+  id            String @id @default(uuid())
+  userId        String @unique
+  user          User   @relation(fields: [userId], references: [id])
+  totalDonated  Float  @default(0)
+  livesImpacted Int    @default(0)
+  badges        String // JSON string for badges
+}
+
+model Artisan {
+  id          String    @id @default(uuid())
+  name        String
+  location    String
+  specialty   String
+  bio         String
+  videoUrl    String?   // For Artisan Story page
+  imageUrl    String
+  profiles    String?   // JSON for extra details 
+  products    Product[]
+  donations   Donation[]
+  sponsorships SponsorshipOption[]
+}
+
+model Product {
+  id          String   @id @default(uuid())
+  title       String
+  description String
+  price       Float
+  category    String   // Dokra, Kantha, Terracotta, etc.
+  imageUrl    String
+  artisanId   String
+  artisan     Artisan  @relation(fields: [artisanId], references: [id])
+  orderItems  OrderItem[]
+  stock       Int      @default(1)
+  heritageImpact String? // Description of impact associated with product
+}
+
+model Order {
+  id        String      @id @default(uuid())
+  createdAt DateTime    @default(now())
+  userId    String?
+  user      User?       @relation(fields: [userId], references: [id])
+  total     Float
+  status    String      @default("PENDING")
+  items     OrderItem[]
+}
+
+model OrderItem {
+  id        String  @id @default(uuid())
+  orderId   String
+  order     Order   @relation(fields: [orderId], references: [id])
+  productId String
+  product   Product @relation(fields: [productId], references: [id])
+  quantity  Int
+}
+
+model Donation {
+  id        String   @id @default(uuid())
+  amount    Float
+  message   String?
+  userId    String?
+  user      User?    @relation(fields: [userId], references: [id])
+  artisanId String
+  artisan   Artisan  @relation(fields: [artisanId], references: [id])
+  createdAt DateTime @default(now())
+}
+
+model SponsorshipOption {
+  id        String   @id @default(uuid())
+  title     String   // e.g., "Sponsor a Raw Material Kit"
+  cost      Float
+  artisanId String
+  artisan   Artisan  @relation(fields: [artisanId], references: [id])
+}
+
+// For Rituchakra Cultural Calendar
+model Event {
+  id          String   @id @default(uuid())
+  title       String
+  date        DateTime
+  season      String   // Grishma, Varsha, etc.
+  description String
+  imageUrl    String?
+}
+
+// For Village Impact Dashboard
+model VillageStat {
+  id             String @id @default(uuid())
+  villageName    String
+  livesImpacted  Int
+  projectsFunded Int
+  fundsDistributed Float
+}
+
+// For Heritage Trails
+model Trail {
+  id          String   @id @default(uuid())
+  title       String
+  description String
+  duration    String
+  imageUrl    String
+  tags        String   // JSON string array ["Moderate", "Small Group"]
+}
+
+// For Scheduled Workshops (Trails/Apprentice)
+model Workshop {
+  id          String   @id @default(uuid())
+  title       String
+  description String
+  price       Float
+  schedule    String   // "Every Weekend"
+  imageUrl    String
+}
+
+// For Digital Cultural Archive
+model Artifact {
+  id          String   @id @default(uuid())
+  title       String
+  description String
+  material    String   // "Terracotta", "Brass"
+  era         String?  // "18th Century"
+  imageUrl    String
+  endangeredLevel String // "High", "Critical"
+}

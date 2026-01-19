@@ -101,14 +101,6 @@ async function main() {
                 artisanId: rashid.id,
             },
             {
-                title: 'Kantha Silk Dupatta',
-                description: 'Hand-stitched Nakshi Kantha embroidery on pure silk with traditional motifs.',
-                price: 4500,
-                category: 'Kantha',
-                imageUrl: 'https://lh3.googleusercontent.com/aida-public/AB6AXuB35tZN_wJY6qQyZJTgJSnXie8r9nHgCv48GLRGqVM_wo_cErG58F9gPrYyWTFtMhj1UQfeRv96vzyK72--6AgNSeWPc5kVHbalp47HqEeT7dPj3rPMmNujRo3XNVI_UMUF-0HKnQOY4bMNNWGGHuKjNaaA5zfyEZq7663umw2wI4MGhjAgkpF_ptGKjNem6n-QhWF1tdRUXLweTUQ54aI9C_TQ77I4JBGYG9mWZqnGcFhLrl2_XN2D8uIV-kLnb418AAop3nLOIy4',
-                artisanId: amina.id,
-            },
-            {
                 title: 'Dokra Elephant Figurine',
                 description: 'Auspicious brass elephant sculpture crafted with ancient lost-wax process.',
                 price: 3200,

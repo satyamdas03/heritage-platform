@@ -27,14 +27,19 @@ export function Navbar({ user }: { user?: User }) {
             <header className="mx-auto flex h-20 max-w-[1440px] items-center justify-between px-6 lg:px-10">
                 <div className="flex items-center gap-4 lg:gap-8">
                     <Link href="/" className="flex items-center gap-3 text-text-main dark:text-white">
-                        <img
-                            src="/logo.png"
-                            alt="Suwarna Bharat"
-                            className="h-10 w-10 object-contain dark:invert dark:brightness-200"
-                        />
-                        <h2 className="font-display text-xl font-bold leading-tight tracking-tight">
-                            Suwarna Bharat
-                        </h2>
+                        <div className="flex h-10 w-10 items-center justify-center rounded-full bg-gradient-to-br from-[#ec9213] to-[#b45309] shadow-md">
+                            <svg className="h-6 w-6 text-white" fill="currentColor" viewBox="0 0 24 24">
+                                <path d="M12 2C6.48 2 2 6.48 2 12s4.48 10 10 10 10-4.48 10-10S17.52 2 12 2zm-2 15l-5-5 1.41-1.41L10 14.17l7.59-7.59L19 8l-9 9z" />
+                            </svg>
+                        </div>
+                        <div className="flex flex-col">
+                            <h2 className="font-display text-lg font-bold leading-tight tracking-tight">
+                                Suwarna Bharat
+                            </h2>
+                            <span className="text-[9px] font-medium uppercase tracking-[0.15em] text-[#b45309] dark:text-[#ec9213]">
+                                Soul of India
+                            </span>
+                        </div>
                     </Link>
                     <div className="hidden items-center gap-6 lg:flex xl:gap-8">
                         <Link

@@ -39,6 +39,42 @@ model Artisan {
   products    Product[]
   donations   Donation[]
   sponsorships SponsorshipOption[]
+  videoStories VideoStory[]
+}
+
+model VideoStory {
+  id           String   @id @default(cuid())
+  title        String
+  description  String
+  videoUrl     String?
+  thumbnailUrl String
+  duration     String
+  artisanId    String
+  artisan      Artisan  @relation(fields: [artisanId], references: [id])
+  likes        Int      @default(0)
+  tags         String   // JSON formatted array
+  createdAt    DateTime @default(now())
+}
+
+model DesignBrief {
+  id           String   @id @default(cuid())
+  title        String
+  description  String
+  category     String
+  status       String
+  deadline     DateTime?
+  proposals    Int      @default(0)
+  createdAt    DateTime @default(now())
+}
+
+model Material {
+  id           String   @id @default(cuid())
+  name         String
+  type         String
+  description  String?
+  imageUrl     String
+  origin       String?
+  createdAt    DateTime @default(now())
 }
 
 model Product {

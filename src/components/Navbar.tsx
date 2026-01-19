@@ -27,13 +27,13 @@ export function Navbar({ user }: { user?: User }) {
             <header className="mx-auto flex h-20 max-w-[1440px] items-center justify-between px-6 lg:px-10">
                 <div className="flex items-center gap-4 lg:gap-8">
                     <Link href="/" className="flex items-center gap-4 text-text-main dark:text-white">
-                        <div className="h-8 w-8 text-primary">
-                            <span className="material-symbols-outlined text-[32px]">
-                                temple_hindu
-                            </span>
+                        <div className="h-8 w-8 text-[#ec7f13]">
+                            <svg fill="none" viewBox="0 0 48 48" xmlns="http://www.w3.org/2000/svg">
+                                <path clipRule="evenodd" d="M47.2426 24L24 47.2426L0.757355 24L24 0.757355L47.2426 24ZM12.2426 21H35.7574L24 9.24264L12.2426 21Z" fill="currentColor" fillRule="evenodd"></path>
+                            </svg>
                         </div>
                         <h2 className="font-display text-xl font-bold leading-tight tracking-tight">
-                            Bengal Heritage
+                            Suwarna Bharat
                         </h2>
                     </Link>
                     <div className="hidden items-center gap-6 lg:flex xl:gap-8">
@@ -48,6 +48,18 @@ export function Navbar({ user }: { user?: User }) {
                             href="/artisans"
                         >
                             Artisans
+                        </Link>
+                        <Link
+                            className="font-body text-sm font-medium text-text-main transition-colors hover:text-primary dark:text-white"
+                            href="/artisan-speaks"
+                        >
+                            Speaks
+                        </Link>
+                        <Link
+                            className="font-body text-sm font-medium text-text-main transition-colors hover:text-primary dark:text-white"
+                            href="/designer-hub"
+                        >
+                            Hub
                         </Link>
                         <Link
                             className="font-body text-sm font-medium text-text-main transition-colors hover:text-primary dark:text-white"

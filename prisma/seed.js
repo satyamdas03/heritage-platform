@@ -88,6 +88,89 @@ async function main() {
         }
     })
 
+    // 6. Create Video Stories (Artisan Speaks)
+    await prisma.videoStory.create({
+        data: {
+            title: 'Sculpting History',
+            description: 'Bishnu Pal shares his journey of 40 years working with terracotta, from temple restoration to modern art.',
+            thumbnailUrl: 'https://lh3.googleusercontent.com/aida-public/AB6AXuDQvw_9b25L8FqA812zyO1bvHzH-UZUyV7eFQI8GWpOoPNLiAoyB41aMwaVrot1EIFc5hy61waSaAz75pvtDVT1EG2BrThn1T_eD79Gwpw2eKYHR63FKp2Qf8UUWxU8YIoQmMdrPEMklvgyQHJwkk1IytDDBef15X5s5CijvFg8P5NfkdROye9rfQhfq3vmeHcaUDmqpTikaOKOoyBUEWsLPYtK9PcXlYgUx2MZjt6e-wm2X3lYvWGyAg9kZvH63trvl82SApCa87E',
+            duration: '08:30',
+            artisanId: rashid.id,
+            tags: '["Terracotta", "Bankura"]',
+        }
+    })
+
+    await prisma.videoStory.create({
+        data: {
+            title: 'Threads of Memory',
+            description: 'Amina Begum demonstrates the ancient Kantha stitch passed down through generations of women.',
+            thumbnailUrl: 'https://lh3.googleusercontent.com/aida-public/AB6AXuAsGdNQsXOzJxL6dHkRSDMXavitfMgYfAriG0pR77cZLz-eoLFaeC8YzOrDSE2nm7cMdaDRnoM1hN8nF8YBvkR5HwN_m7m-3EEYAtzZyNw2TRUKaXGgH-SOkuL8qDh4aPVXb9xhNJOQzWPqTATUVYgFfTDF8Hb-n5qW5A9UNmt6t8JHaYPz3XQJJcoKAmPq00tUPVhplUQx8c5qACGpW1r_UwWhVM7M7Vkc9eekCzEN17CGbBt7jZNbkRcIyN7NezNrcQlk9bgge-M',
+            duration: '15:10',
+            artisanId: rashid.id,
+            tags: '["Kantha", "Embroidery"]',
+        }
+    })
+
+    await prisma.videoStory.create({
+        data: {
+            title: 'Metal and Fire',
+            description: 'Gourab Karmakar reveals the secrets of Dokra metal casting, a 4000-year-old lost-wax technique.',
+            thumbnailUrl: 'https://lh3.googleusercontent.com/aida-public/AB6AXuCFQ3FBdCtarR-gplkKZsW6Zi3zHAg8_3OGTEnqM_rRQxAjrHJFuxlEu3RYt6D_XRfr64P15Ad-WlyEgDUX30N10K9Fh_wuwqAegs5VzElr0ApBgqG7uRbSLAzKR0lVXU_Yxvcm8YrKsckB67vS53IUfXp09FG5IEBvpQe_6t0Pp0CMBL1PhKUBfyIzRvd6NixM-LwR5SV-L8UgnawOiwkCgAVBvsPQGB1hCMnimJVi-t-5xpe-e_8yZR5lm9dL_2YFiewCqXeF9FM',
+            duration: '14:15',
+            artisanId: rashid.id,
+            tags: '["Dokra", "Metal Casting"]',
+        }
+    })
+
+    // 7. Create Design Briefs (Designer Hub)
+    await prisma.designBrief.create({
+        data: {
+            title: 'Modern Kantha Jacket Collection',
+            description: 'Looking for skilled embroiderers in Birbhum for a fusion outerwear collection that blends denim with traditional Nakshi Kantha stitching patterns.',
+            category: 'Apparel',
+            status: 'Open',
+            proposals: 6,
+        }
+    })
+
+    await prisma.designBrief.create({
+        data: {
+            title: 'Sustainable Jamdani Scarves',
+            description: 'Developing a new line of organic cotton Jamdani weaves. Need collaboration on motif scaling and natural dye sourcing.',
+            category: 'Textile',
+            status: 'In Progress',
+            proposals: 3,
+        }
+    })
+
+    // 8. Create Materials (Designer Hub Material Library)
+    await prisma.material.create({
+        data: {
+            name: 'Royal Red Jamdani',
+            type: 'Dhaka Weave',
+            imageUrl: 'https://lh3.googleusercontent.com/aida-public/AB6AXuBZ758jVzJVt7Vqyh45YO21yccGrTUrl1RwsWdC7sO0n4v50T1qbXi5y1E4I2DDeSOe9b0BQGUkKoTCLe3H3HOutkG7xMXsTwA7XXg6k4dFE-Rdh-IZ5_Cdpm0Agq5k22Olfjv3IBCtYlT54LZJh6C4P-Q0coclAAAIhGihJWbCw3KSrFEvBmo1VL-JMLRwVk0gFNPE_TRJIWrDmgqNCbrcf1tLoqZDzTfuu-6WHcZYe6IdVXsi1ALUkLM-OqJ77-WXaxHuLsQZMoM',
+            origin: 'Nadia, West Bengal',
+        }
+    })
+
+    await prisma.material.create({
+        data: {
+            name: 'Tussar Silk',
+            type: 'Raw Finish',
+            imageUrl: 'https://lh3.googleusercontent.com/aida-public/AB6AXuAUlAqSPqPEELBYkMX9t4_FBSrrn3dZisb228k_itTTEG7rtVtJbRB4qMBP6C5EgJXVZvc-89nFPrsJ_zVRXDLxON7PqJCZ8fqIBb-QqppMokBKx_cQvsUlcz5f9h75a8hj6wJ-d3gIZofFc1HWJU9ee_uRwDbyqY2n_uzbEJCSf1SbcSZmYMt1igYRiAoGvMDe2Dsxm5wAmBI9fDt6007pmUoKMgHwoYTgWtiheT95HCc576_jeZrJUxE69gPKzGNcsz-n0HkNrXk',
+            origin: 'Bhagalpur, Bihar',
+        }
+    })
+
+    await prisma.material.create({
+        data: {
+            name: 'Nakshi Kantha',
+            type: 'Floral Motif',
+            imageUrl: 'https://lh3.googleusercontent.com/aida-public/AB6AXuB35tZN_wJY6qQyZJTgJSnXie8r9nHgCv48GLRGqVM_wo_cErG58F9gPrYyWTFtMhj1UQfeRv96vzyK72--6AgNSeWPc5kVHbalp47HqEeT7dPj3rPMmNujRo3XNVI_UMUF-0HKnQOY4bMNNWGGHuKjNaaA5zfyEZq7663umw2wI4MGhjAgkpF_ptGKjNem6n-QhWF1tdRUXLweTUQ54aI9C_TQ77I4JBGYG9mWZqnGcFhLrl2_XN2D8uIV-kLnb418AAop3nLOIy4',
+            origin: 'Birbhum, West Bengal',
+        }
+    })
+
     console.log('Seeding finished.')
 }
 

@@ -102,12 +102,28 @@ export default function AdminBlogsPage() {
             });
 
             if (res.ok) {
+                alert(published ? 'Blog published successfully!' : 'Draft saved!');
                 setCurrentBlog({ title: '', content: '', excerpt: '', category: 'Heritage News', tags: '', imageUrl: '', published: false });
                 setIsEditing(false);
                 fetchBlogs();
+            } else {
+                const data = await res.json();
+                alert(data.error || 'Operation failed');
             }
         } catch (error) {
             console.error('Error saving blog:', error);
+            alert('An error occurred while saving.');
+        }
+    };
+
+    const handleImageUpload = (e: React.ChangeEvent<HTMLInputElement>) => {
+        const file = e.target.files?.[0];
+        if (file) {
+            const reader = new FileReader();
+            reader.onloadend = () => {
+                setCurrentBlog({ ...currentBlog, imageUrl: reader.result as string });
+            };
+            reader.readAsDataURL(file);
         }
     };
 
@@ -126,13 +142,25 @@ export default function AdminBlogsPage() {
             const res = await fetch(`/api/blogs?id=${id}`, { method: 'DELETE' });
             if (res.ok) {
                 fetchBlogs();
+            } else {
+                alert('Failed to delete blog');
             }
         } catch (error) {
             console.error('Error deleting blog:', error);
         }
     };
 
+    if (loading) {
+        return (
+            <div className="min-h-screen bg-[#f8f7f6] dark:bg-[#221a10] flex items-center justify-center">
+                <div className="text-[#897261]">Loading...</div>
+            </div>
+        );
+    }
 
+    if (!isAdmin) {
+        return null;
+    }
 
     return (
         <div className="flex h-screen overflow-hidden bg-[#f8f7f6] dark:bg-[#221810] text-[#181411] dark:text-[#f8f7f6]">
@@ -181,18 +209,21 @@ export default function AdminBlogsPage() {
                     {isEditing && (
                         <div className="flex items-center gap-3">
                             <button
+                                type="button"
                                 onClick={() => handleSubmit(false)}
                                 className="px-4 py-2 text-sm font-bold text-[#897261] hover:text-[#ee7c2b] transition-colors"
                             >
                                 Save Draft
                             </button>
                             <button
+                                type="button"
                                 onClick={() => setIsEditing(false)}
                                 className="px-4 py-2 text-sm font-bold text-[#897261] border border-[#e6e0db] dark:border-[#3d2e23] rounded-lg hover:bg-gray-50 transition-all"
                             >
                                 Cancel
                             </button>
                             <button
+                                type="button"
                                 onClick={() => handleSubmit(true)}
                                 className="px-6 py-2 bg-[#ee7c2b] text-white text-sm font-bold rounded-lg hover:bg-opacity-90 transition-all shadow-sm"
                             >
@@ -208,13 +239,13 @@ export default function AdminBlogsPage() {
                         <div className="flex gap-8">
                             <div className="flex-grow max-w-[800px] space-y-6">
                                 <input
-                                    className="w-full text-4xl font-bold font-display border-none focus:ring-0 placeholder-gray-300 dark:placeholder-gray-700 bg-transparent p-0"
+                                    className="w-full text-4xl font-bold font-display border-none focus:ring-0 placeholder-gray-300 dark:placeholder-gray-600 bg-transparent p-0 text-[#181411] dark:text-white"
                                     placeholder="Post Title"
                                     value={currentBlog.title || ''}
                                     onChange={(e) => setCurrentBlog({ ...currentBlog, title: e.target.value })}
                                 />
                                 <textarea
-                                    className="w-full min-h-[400px] border border-[#e6e0db] dark:border-[#3d2e23] rounded-lg p-4 text-lg leading-relaxed placeholder-gray-300 dark:placeholder-gray-700 bg-white dark:bg-[#2d221a] resize-none focus:ring-[#ee7c2b] focus:border-[#ee7c2b]"
+                                    className="w-full min-h-[400px] border border-[#e6e0db] dark:border-[#3d2e23] rounded-lg p-4 text-lg leading-relaxed placeholder-gray-300 dark:placeholder-gray-600 bg-white dark:bg-[#2d221a] resize-none focus:ring-[#ee7c2b] focus:border-[#ee7c2b] text-[#181411] dark:text-[#dcd6d0]"
                                     placeholder="Begin your heritage story here..."
                                     value={currentBlog.content || ''}
                                     onChange={(e) => setCurrentBlog({ ...currentBlog, content: e.target.value })}
@@ -224,10 +255,27 @@ export default function AdminBlogsPage() {
                             {/* Settings Sidebar */}
                             <aside className="w-72 space-y-6">
                                 <div className="space-y-3">
-                                    <label className="text-xs font-bold text-[#897261]">Featured Image URL</label>
+                                    <label className="text-xs font-bold text-[#897261]">Featured Image</label>
                                     <input
-                                        className="w-full bg-white dark:bg-[#2d221a] border-[#e6e0db] dark:border-[#3d2e23] rounded-lg text-sm focus:ring-[#ee7c2b] focus:border-[#ee7c2b]"
-                                        placeholder="https://example.com/image.jpg"
+                                        type="file"
+                                        accept="image/*"
+                                        onChange={handleImageUpload}
+                                        className="w-full text-xs text-[#897261] file:mr-4 file:py-2 file:px-4 file:rounded-full file:border-0 file:text-xs file:font-semibold file:bg-[#ee7c2b]/10 file:text-[#ee7c2b] hover:file:bg-[#ee7c2b]/20"
+                                    />
+                                    {currentBlog.imageUrl && (
+                                        <div className="relative w-full aspect-video rounded-lg overflow-hidden border border-[#e6e0db]">
+                                            <img src={currentBlog.imageUrl} alt="Preview" className="object-cover w-full h-full" />
+                                            <button
+                                                onClick={() => setCurrentBlog({ ...currentBlog, imageUrl: '' })}
+                                                className="absolute top-1 right-1 bg-black/50 text-white rounded-full p-1 hover:bg-red-500"
+                                            >
+                                                <span className="material-symbols-outlined text-xs">close</span>
+                                            </button>
+                                        </div>
+                                    )}
+                                    <input
+                                        className="w-full bg-white dark:bg-[#2d221a] border-[#e6e0db] dark:border-[#3d2e23] rounded-lg text-sm focus:ring-[#ee7c2b] focus:border-[#ee7c2b] text-[#181411] dark:text-white"
+                                        placeholder="Or clean image URL..."
                                         value={currentBlog.imageUrl || ''}
                                         onChange={(e) => setCurrentBlog({ ...currentBlog, imageUrl: e.target.value })}
                                     />
@@ -235,7 +283,7 @@ export default function AdminBlogsPage() {
                                 <div className="space-y-3">
                                     <label className="text-xs font-bold text-[#897261]">Category</label>
                                     <select
-                                        className="w-full bg-white dark:bg-[#2d221a] border-[#e6e0db] dark:border-[#3d2e23] rounded-lg text-sm focus:ring-[#ee7c2b] focus:border-[#ee7c2b]"
+                                        className="w-full bg-white dark:bg-[#2d221a] border-[#e6e0db] dark:border-[#3d2e23] rounded-lg text-sm focus:ring-[#ee7c2b] focus:border-[#ee7c2b] text-[#181411] dark:text-white"
                                         value={currentBlog.category || 'Heritage News'}
                                         onChange={(e) => setCurrentBlog({ ...currentBlog, category: e.target.value })}
                                     >
@@ -248,7 +296,7 @@ export default function AdminBlogsPage() {
                                 <div className="space-y-3">
                                     <label className="text-xs font-bold text-[#897261]">Tags (comma separated)</label>
                                     <input
-                                        className="w-full bg-white dark:bg-[#2d221a] border-[#e6e0db] dark:border-[#3d2e23] rounded-lg text-sm focus:ring-[#ee7c2b] focus:border-[#ee7c2b]"
+                                        className="w-full bg-white dark:bg-[#2d221a] border-[#e6e0db] dark:border-[#3d2e23] rounded-lg text-sm focus:ring-[#ee7c2b] focus:border-[#ee7c2b] text-[#181411] dark:text-white"
                                         placeholder="Jamdani, Weaving, Bengal"
                                         value={currentBlog.tags || ''}
                                         onChange={(e) => setCurrentBlog({ ...currentBlog, tags: e.target.value })}
@@ -257,7 +305,7 @@ export default function AdminBlogsPage() {
                                 <div className="space-y-3">
                                     <label className="text-xs font-bold text-[#897261]">Short Excerpt</label>
                                     <textarea
-                                        className="w-full bg-white dark:bg-[#2d221a] border-[#e6e0db] dark:border-[#3d2e23] rounded-lg text-sm focus:ring-[#ee7c2b] focus:border-[#ee7c2b] resize-none"
+                                        className="w-full bg-white dark:bg-[#2d221a] border-[#e6e0db] dark:border-[#3d2e23] rounded-lg text-sm focus:ring-[#ee7c2b] focus:border-[#ee7c2b] resize-none text-[#181411] dark:text-white"
                                         placeholder="A brief summary..."
                                         rows={3}
                                         value={currentBlog.excerpt || ''}

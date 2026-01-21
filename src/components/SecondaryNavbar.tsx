@@ -9,7 +9,7 @@ export function SecondaryNavbar() {
     const { data: session } = useSession();
 
     return (
-        <div className="bg-[#181511] text-white px-4 py-2 md:px-10 text-xs md:text-sm tracking-wide">
+        <div className="bg-[#181511]/90 backdrop-blur-md text-white px-4 py-2 md:px-10 text-xs md:text-sm tracking-wide border-b border-white/5">
             <div className="mx-auto max-w-[1400px] flex flex-col md:flex-row justify-between items-center gap-2">
                 <div className="flex items-center gap-6">
                     <div className="flex items-center gap-2">

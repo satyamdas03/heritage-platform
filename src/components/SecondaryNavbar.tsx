@@ -8,13 +8,6 @@ const ADMIN_EMAIL = 'satyamdas03@gmail.com';
 export function SecondaryNavbar() {
     const { data: session } = useSession();
 
-    // Debug logging
-    console.log('Session Check:', {
-        email: session?.user?.email,
-        adminEmail: ADMIN_EMAIL,
-        isMatch: session?.user?.email?.toLowerCase() === ADMIN_EMAIL.toLowerCase()
-    });
-
     return (
         <div className="bg-[#181511]/90 backdrop-blur-md text-white px-4 py-2 md:px-10 text-xs md:text-sm tracking-wide border-b border-white/5">
             <div className="mx-auto max-w-[1400px] flex flex-col md:flex-row justify-between items-center gap-2">
@@ -28,11 +21,7 @@ export function SecondaryNavbar() {
                         <span>suwarnabharat2022@gmail.com</span>
                     </div>
                 </div>
-                {/* DEBUG TITLE: Hover over this div to see logged in email */}
-                <div
-                    className="hidden md:flex items-center gap-6 text-white/80"
-                    title={`Logged in as: ${session?.user?.email || 'Guest'}`}
-                >
+                <div className="hidden md:flex items-center gap-6 text-white/80">
                     {/* Blog Buttons */}
                     {session?.user?.email?.toLowerCase() === ADMIN_EMAIL.toLowerCase() && (
                         <Link

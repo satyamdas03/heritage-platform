@@ -3,6 +3,7 @@ import { Noto_Serif, Noto_Sans } from "next/font/google";
 import "./globals.css";
 import { Providers } from "@/components/Providers";
 import { Navbar } from "@/components/Navbar";
+import { SecondaryNavbar } from "@/components/SecondaryNavbar";
 import { Footer } from "@/components/Footer";
 import { auth } from "@/auth";
 
@@ -41,6 +42,7 @@ export default async function RootLayout({
         <Providers>
           <div className="relative flex min-h-screen flex-col">
             <Navbar user={session?.user} />
+            <SecondaryNavbar />
             <main className="flex-1">{children}</main>
             <Footer />
           </div>

@@ -15,26 +15,7 @@ export default async function Home() {
 
   return (
     <div className="min-h-screen bg-[#f8f7f6] dark:bg-[#221a10] text-[#181511] dark:text-[#f8f7f6]">
-      {/* Top Bar */}
-      <div className="bg-[#181511] text-white px-4 py-2 md:px-10 text-xs md:text-sm tracking-wide">
-        <div className="mx-auto max-w-[1400px] flex flex-col md:flex-row justify-between items-center gap-2">
-          <div className="flex items-center gap-6">
-            <div className="flex items-center gap-2">
-              <span className="material-symbols-outlined text-sm">call</span>
-              <span>+91 9903047208</span>
-            </div>
-            <div className="flex items-center gap-2">
-              <span className="material-symbols-outlined text-sm">mail</span>
-              <span>suwarnabharat2022@gmail.com</span>
-            </div>
-          </div>
-          <div className="hidden md:flex items-center gap-6 text-white/80">
-            <Link className="hover:text-[#ec9213] transition-colors" href="#">About Us</Link>
-            <Link className="hover:text-[#ec9213] transition-colors" href="/sponsor">Support</Link>
-            <Link className="hover:text-[#ec9213] transition-colors" href="#">FAQ</Link>
-          </div>
-        </div>
-      </div>
+
 
       {/* Hero Section */}
       <section className="relative w-full bg-[#f4f1ed] dark:bg-[#1a150e] overflow-hidden py-12 md:py-20 lg:py-28 px-4 md:px-10">

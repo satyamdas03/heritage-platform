@@ -39,11 +39,15 @@ export default function AdminBlogsPage() {
 
     useEffect(() => {
         if (status === 'loading') return;
-        if (!session || !isAdmin) {
+        if (!session) {
             router.push('/login');
             return;
         }
-        fetchBlogs();
+        if (isAdmin) {
+            fetchBlogs();
+        } else {
+            setLoading(false); // Stop loading to show access denied
+        }
     }, [session, status, isAdmin, router]);
 
     const fetchBlogs = async () => {
@@ -57,6 +61,30 @@ export default function AdminBlogsPage() {
             setLoading(false);
         }
     };
+
+    if (status === 'loading' || (loading && isAdmin)) {
+        return (
+            <div className="min-h-screen bg-[#f8f7f6] dark:bg-[#221a10] flex items-center justify-center">
+                <div className="text-[#897261]">Loading...</div>
+            </div>
+        );
+    }
+
+    if (!isAdmin) {
+        return (
+            <div className="min-h-screen bg-[#f8f7f6] dark:bg-[#221a10] flex flex-col items-center justify-center p-4">
+                <span className="material-symbols-outlined text-6xl text-red-500 mb-4">gpp_maybe</span>
+                <h1 className="text-2xl font-bold mb-2">Access Denied</h1>
+                <p className="text-[#897261] mb-6 text-center max-w-md">
+                    You are logged in as <strong>{session?.user?.email}</strong>.
+                    This area is restricted to administrators.
+                </p>
+                <Link href="/" className="px-6 py-3 bg-[#ee7c2b] text-white font-bold rounded-lg hover:bg-opacity-90">
+                    Return Home
+                </Link>
+            </div>
+        );
+    }
 
     const handleSubmit = async (published: boolean) => {
         try {
@@ -104,17 +132,7 @@ export default function AdminBlogsPage() {
         }
     };
 
-    if (status === 'loading' || loading) {
-        return (
-            <div className="min-h-screen bg-[#f8f7f6] dark:bg-[#221810] flex items-center justify-center">
-                <div className="text-[#897261]">Loading...</div>
-            </div>
-        );
-    }
 
-    if (!isAdmin) {
-        return null;
-    }
 
     return (
         <div className="flex h-screen overflow-hidden bg-[#f8f7f6] dark:bg-[#221810] text-[#181411] dark:text-[#f8f7f6]">

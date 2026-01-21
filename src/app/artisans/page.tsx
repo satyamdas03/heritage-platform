@@ -15,24 +15,7 @@ export default async function ArtisansPage() {
     return (
         <div className="min-h-screen bg-[#fcfbf7] dark:bg-[#221a10] text-[#181511]">
             {/* Top Bar */}
-            <div className="bg-black text-white text-xs py-2 px-6">
-                <div className="max-w-7xl mx-auto flex flex-col sm:flex-row justify-between items-center gap-2">
-                    <div className="flex items-center gap-6">
-                        <div className="flex items-center gap-2">
-                            <span className="material-symbols-outlined text-[14px]">call</span>
-                            <span>+91 9903047208</span>
-                        </div>
-                        <div className="flex items-center gap-2">
-                            <span className="material-symbols-outlined text-[14px]">mail</span>
-                            <span>suwarnabharat2022@gmail.com</span>
-                        </div>
-                    </div>
-                    <div className="hidden sm:flex items-center gap-6 uppercase tracking-wider font-medium">
-                        <Link className="hover:text-[#ec9213] transition-colors" href="#">About Us</Link>
-                        <Link className="hover:text-[#ec9213] transition-colors" href="/sponsor">Support</Link>
-                    </div>
-                </div>
-            </div>
+
 
             {/* Main Content */}
             <main className="flex-grow w-full max-w-7xl mx-auto px-6 py-8">
@@ -55,8 +38,8 @@ export default async function ArtisansPage() {
                         <button
                             key={filter}
                             className={`px-4 py-2 rounded-full text-sm font-medium transition-colors ${idx === 0
-                                    ? 'bg-[#ec9213] text-white'
-                                    : 'bg-white dark:bg-white/5 border border-[#e6e1db] dark:border-white/10 text-[#181511] dark:text-gray-300 hover:border-[#ec9213] hover:text-[#ec9213]'
+                                ? 'bg-[#ec9213] text-white'
+                                : 'bg-white dark:bg-white/5 border border-[#e6e1db] dark:border-white/10 text-[#181511] dark:text-gray-300 hover:border-[#ec9213] hover:text-[#ec9213]'
                                 }`}
                         >
                             {filter}

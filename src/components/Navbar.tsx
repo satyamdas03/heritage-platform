@@ -96,26 +96,6 @@ export function Navbar({ user }: { user?: User }) {
                         >
                             Impact
                         </Link>
-                        {user?.email === 'satyamdas03@gmail.com' && (
-                            <Link
-                                className="font-body text-sm font-bold text-[#ee7c2b] transition-colors hover:text-[#c2621b]"
-                                href="/admin/blogs"
-                            >
-                                Write Blog
-                            </Link>
-                        )}
-                        <Link
-                            className="font-body text-sm font-medium text-text-main transition-colors hover:text-primary dark:text-white"
-                            href="/blogs"
-                        >
-                            View Blogs
-                        </Link>
-                        <Link
-                            className="font-body text-sm font-medium text-text-main transition-colors hover:text-primary dark:text-white"
-                            href="/about"
-                        >
-                            About Us
-                        </Link>
                     </div>
                 </div>
                 <div className="flex flex-1 justify-end gap-3 lg:gap-4">

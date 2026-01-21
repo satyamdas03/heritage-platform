@@ -15,22 +15,7 @@ export default async function MarketplacePage() {
 
     return (
         <div className="min-h-screen bg-[#faf9f6] dark:bg-[#1c1917] text-[#292524]">
-            {/* Top Banner */}
-            <div className="w-full bg-[#d97706] text-white text-[11px] font-medium tracking-wide">
-                <div className="mx-auto flex h-9 max-w-[1440px] items-center justify-between px-6 lg:px-10">
-                    <div className="flex items-center gap-6">
-                        <span className="flex items-center gap-1.5 opacity-90">
-                            <span className="material-symbols-outlined text-[16px]">call</span> +91 33 2461 8888
-                        </span>
-                        <span className="hidden sm:flex items-center gap-1.5 opacity-90">
-                            <span className="material-symbols-outlined text-[16px]">mail</span> namaste@suwarnabharat.in
-                        </span>
-                    </div>
-                    <div className="flex items-center gap-4">
-                        <span className="hidden md:inline text-white/80">Worldwide Shipping Available</span>
-                    </div>
-                </div>
-            </div>
+
 
             {/* Hero Banner */}
             <div className="py-8 px-6 lg:px-10 max-w-[1440px] mx-auto">

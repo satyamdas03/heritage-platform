@@ -42,18 +42,7 @@ export default function RegisterPage() {
 
     return (
         <div className="min-h-screen bg-[#fffaf5] flex flex-col text-stone-800">
-            {/* Top Bar */}
-            <div className="bg-stone-900 text-stone-300 text-xs py-2 px-4 border-b border-stone-800">
-                <div className="max-w-[1200px] mx-auto flex justify-between items-center">
-                    <div className="flex gap-4">
-                        <span className="flex items-center gap-1"><span className="material-symbols-outlined text-[14px]">call</span> +91 33 2456 7890</span>
-                        <span className="hidden sm:flex items-center gap-1"><span className="material-symbols-outlined text-[14px]">mail</span> helpdesk@suwarnabharat.in</span>
-                    </div>
-                    <div className="flex gap-4">
-                        <span>Field Agent Support</span>
-                    </div>
-                </div>
-            </div>
+
 
             {/* Main Content */}
             <main className="flex-1 w-full max-w-[1000px] mx-auto p-4 md:p-8 flex flex-col gap-8">

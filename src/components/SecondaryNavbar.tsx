@@ -23,7 +23,7 @@ export function SecondaryNavbar() {
                 </div>
                 <div className="hidden md:flex items-center gap-6 text-white/80">
                     {/* Blog Buttons */}
-                    {session?.user?.email === ADMIN_EMAIL && (
+                    {session?.user?.email?.toLowerCase() === ADMIN_EMAIL.toLowerCase() && (
                         <Link
                             className="text-[#ee7c2b] font-bold hover:text-[#c2621b] transition-colors"
                             href="/admin/blogs"
@@ -39,7 +39,7 @@ export function SecondaryNavbar() {
                     </Link>
 
                     {/* Standard Links */}
-                    <Link className="hover:text-[#ec9213] transition-colors" href="/about">About Us</Link>
+                    <Link className="hover:text-[#ec9213] transition-colors" href="#">About Us</Link>
                     <Link className="hover:text-[#ec9213] transition-colors" href="/sponsor">Support</Link>
                     <Link className="hover:text-[#ec9213] transition-colors" href="#">FAQ</Link>
                 </div>

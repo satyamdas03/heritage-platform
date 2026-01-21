@@ -1,7 +1,7 @@
 import type { Metadata } from "next";
 import { Noto_Serif, Noto_Sans } from "next/font/google";
 import "./globals.css";
-import { ThemeProvider } from "@/components/theme-provider";
+import { Providers } from "@/components/Providers";
 import { Navbar } from "@/components/Navbar";
 import { Footer } from "@/components/Footer";
 import { auth } from "@/auth";
@@ -38,18 +38,13 @@ export default async function RootLayout({
       <body
         className={`${notoSerif.variable} ${notoSans.variable} antialiased bg-background-light dark:bg-background-dark text-text-main dark:text-white font-body`}
       >
-        <ThemeProvider
-          attribute="class"
-          defaultTheme="system"
-          enableSystem
-          disableTransitionOnChange
-        >
+        <Providers>
           <div className="relative flex min-h-screen flex-col">
             <Navbar user={session?.user} />
             <main className="flex-1">{children}</main>
             <Footer />
           </div>
-        </ThemeProvider>
+        </Providers>
       </body>
     </html>
   );

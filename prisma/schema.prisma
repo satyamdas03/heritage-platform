@@ -178,3 +178,19 @@ model Artifact {
   imageUrl    String
   endangeredLevel String // "High", "Critical"
 }
+
+// For Blog Posts
+model Blog {
+  id          String   @id @default(uuid())
+  title       String
+  content     String   @db.Text
+  excerpt     String?
+  category    String   @default("Heritage News")
+  tags        String?  // JSON string array
+  imageUrl    String?
+  published   Boolean  @default(false)
+  authorId    String?
+  createdAt   DateTime @default(now())
+  updatedAt   DateTime @updatedAt
+}
+

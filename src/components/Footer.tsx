@@ -1,6 +1,14 @@
+'use client';
+
 import Link from "next/link";
+import { useSession } from "next-auth/react";
+
+const ADMIN_EMAIL = 'satyamdas03@gmail.com';
 
 export function Footer() {
+    const { data: session } = useSession();
+    const isAdmin = session?.user?.email === ADMIN_EMAIL;
+
     return (
         <footer className="mt-auto border-t border-[#e6e2db] bg-white dark:bg-card-dark dark:border-white/10">
             <div className="mx-auto max-w-[1440px] px-6 py-12 lg:px-10">
@@ -62,9 +70,22 @@ export function Footer() {
                 </div>
                 <div className="mt-12 flex flex-col md:flex-row justify-between items-center border-t border-gray-100 dark:border-white/5 pt-8 gap-4">
                     <p className="text-xs text-text-muted dark:text-gray-500">© 2023 The Heritage Platform. All rights reserved.</p>
-                    <div className="flex gap-6">
-                        <Link href="#" className="text-xs text-text-muted hover:text-text-main dark:text-gray-500 dark:hover:text-white">Privacy Policy</Link>
-                        <Link href="#" className="text-xs text-text-muted hover:text-text-main dark:text-gray-500 dark:hover:text-white">Terms of Service</Link>
+                    <div className="flex gap-6 items-center">
+                        {/* Blog Links */}
+                        {isAdmin && (
+                            <Link href="/admin/blogs" className="text-xs font-bold text-primary hover:text-primary/80 flex items-center gap-1">
+                                <span className="material-symbols-outlined text-sm">edit_note</span>
+                                Write Blog
+                            </Link>
+                        )}
+                        <Link href="/blogs" className="text-xs font-bold text-primary hover:text-primary/80 flex items-center gap-1">
+                            <span className="material-symbols-outlined text-sm">article</span>
+                            View Blogs
+                        </Link>
+                        <span className="text-gray-300 dark:text-gray-600">|</span>
+                        <Link href="#" className="text-xs text-text-muted hover:text-text-main dark:text-gray-500 dark:hover:text-white">About Us</Link>
+                        <Link href="#" className="text-xs text-text-muted hover:text-text-main dark:text-gray-500 dark:hover:text-white">Support</Link>
+                        <Link href="#" className="text-xs text-text-muted hover:text-text-main dark:text-gray-500 dark:hover:text-white">FAQ</Link>
                     </div>
                 </div>
             </div>

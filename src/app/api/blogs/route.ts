@@ -3,15 +3,20 @@ import prisma from '@/lib/prisma';
 
 // GET - Fetch all published blogs (public) or all blogs (admin)
 export async function GET(request: NextRequest) {
-    const { searchParams } = new URL(request.url);
-    const admin = searchParams.get('admin') === 'true';
+    try {
+        const { searchParams } = new URL(request.url);
+        const admin = searchParams.get('admin') === 'true';
 
-    const blogs = await prisma.blog.findMany({
-        where: admin ? {} : { published: true },
-        orderBy: { createdAt: 'desc' },
-    });
+        const blogs = await prisma.blog.findMany({
+            where: admin ? {} : { published: true },
+            orderBy: { createdAt: 'desc' },
+        });
 
-    return NextResponse.json(blogs);
+        return NextResponse.json(blogs);
+    } catch (error: any) {
+        console.error('Error fetching blogs:', error);
+        return NextResponse.json({ error: `Failed to fetch blogs: ${error.message}` }, { status: 500 });
+    }
 }
 
 // POST - Create new blog (admin only)
@@ -33,9 +38,9 @@ export async function POST(request: NextRequest) {
         });
 
         return NextResponse.json(blog, { status: 201 });
-    } catch (error) {
+    } catch (error: any) {
         console.error('Error creating blog:', error);
-        return NextResponse.json({ error: 'Failed to create blog' }, { status: 500 });
+        return NextResponse.json({ error: `Failed to create blog: ${error.message}` }, { status: 500 });
     }
 }
 

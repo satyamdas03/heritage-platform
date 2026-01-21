@@ -108,11 +108,12 @@ export default function AdminBlogsPage() {
                 fetchBlogs();
             } else {
                 const data = await res.json();
+                console.error('Save failed:', data);
                 alert(data.error || 'Operation failed');
             }
         } catch (error) {
             console.error('Error saving blog:', error);
-            alert('An error occurred while saving.');
+            alert('An error occurred while saving. Check console for details.');
         }
     };
 

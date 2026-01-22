@@ -62,7 +62,8 @@ export default async function BlogDetailPage({ params }: { params: Promise<{ id:
                 </div>
 
                 <article
-                    className="prose prose-lg dark:prose-invert max-w-none [&_img]:rounded-xl [&_img]:shadow-md prose-img:max-w-full prose-p:text-justify prose-p:leading-relaxed break-words overflow-hidden"
+                    className="prose prose-lg dark:prose-invert max-w-none [&_img]:rounded-xl [&_img]:shadow-md prose-img:max-w-full prose-p:leading-relaxed break-words overflow-hidden [&_*]:hyphens-none"
+                    style={{ wordBreak: 'normal', overflowWrap: 'break-word' }}
                     dangerouslySetInnerHTML={{ __html: blog.content }}
                 />
 

@@ -12,24 +12,27 @@
 
   --font-display: var(--font-noto-serif);
   --font-body: var(--font-noto-sans);
-  
+
   --animate-pulse: pulse 2s cubic-bezier(0.4, 0, 0.6, 1) infinite;
 }
 
 /* Custom scrollbar */
 ::-webkit-scrollbar {
-    width: 8px;
-    height: 8px;
+  width: 8px;
+  height: 8px;
 }
+
 ::-webkit-scrollbar-track {
-    background: #221a10;
+  background: #221a10;
 }
+
 ::-webkit-scrollbar-thumb {
-    background: #54493b;
-    border-radius: 4px;
+  background: #54493b;
+  border-radius: 4px;
 }
+
 ::-webkit-scrollbar-thumb:hover {
-    background: #ec9213;
+  background: #ec9213;
 }
 
 body {
@@ -43,4 +46,16 @@ body {
     background-color: var(--color-background-dark);
     color: #ffffff;
   }
+}
+
+/* Typography refinements */
+.prose p {
+  margin-top: 1em;
+  margin-bottom: 1em;
+  line-height: 1.6;
+}
+
+.prose img {
+  margin-top: 1.5em;
+  margin-bottom: 1.5em;
 }

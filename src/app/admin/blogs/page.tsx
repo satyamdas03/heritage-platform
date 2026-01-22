@@ -127,10 +127,15 @@ export default function AdminBlogsPage() {
             const arrayBuffer = await file.arrayBuffer();
             const result = await mammoth.convertToHtml({ arrayBuffer });
 
+            // Extract first image
+            const imgMatch = result.value.match(/<img[^>]+src="([^">]+)"/);
+            const firstImage = imgMatch ? imgMatch[1] : '';
+
             setCurrentBlog(prev => ({
                 ...prev,
                 title: prev.title || file.name.replace(/\.docx?$/, ''),
-                content: result.value
+                content: result.value,
+                imageUrl: firstImage || prev.imageUrl
             }));
 
             if (result.messages.length > 0) {

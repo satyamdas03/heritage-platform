@@ -61,10 +61,8 @@ export default async function BlogDetailPage({ params }: { params: Promise<{ id:
                     <span>{Math.ceil(blog.content.length / 1000)} Min Read</span>
                 </div>
 
-                {/* Content */}
-                {/* Content */}
                 <article
-                    className="prose prose-lg dark:prose-invert max-w-none [&_img]:rounded-xl [&_img]:shadow-md"
+                    className="prose prose-lg dark:prose-invert max-w-none [&_img]:rounded-xl [&_img]:shadow-md prose-img:max-w-full prose-p:text-justify prose-p:leading-relaxed break-words overflow-hidden"
                     dangerouslySetInnerHTML={{ __html: blog.content }}
                 />
 

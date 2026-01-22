@@ -4,6 +4,8 @@ import { useState, useEffect } from 'react';
 import { useSession } from 'next-auth/react';
 import { useRouter } from 'next/navigation';
 import Link from 'next/link';
+import mammoth from 'mammoth';
+import Editor from '@/components/Editor';
 
 const ADMIN_EMAIL = 'satyamdas03@gmail.com';
 
@@ -114,6 +116,29 @@ export default function AdminBlogsPage() {
         } catch (error) {
             console.error('Error saving blog:', error);
             alert('An error occurred while saving. Check console for details.');
+        }
+    };
+
+    const handleWordImport = async (e: React.ChangeEvent<HTMLInputElement>) => {
+        const file = e.target.files?.[0];
+        if (!file) return;
+
+        try {
+            const arrayBuffer = await file.arrayBuffer();
+            const result = await mammoth.convertToHtml({ arrayBuffer });
+
+            setCurrentBlog(prev => ({
+                ...prev,
+                title: prev.title || file.name.replace(/\.docx?$/, ''),
+                content: result.value
+            }));
+
+            if (result.messages.length > 0) {
+                console.warn('Word import warnings:', result.messages);
+            }
+        } catch (error) {
+            console.error('Error importing Word doc:', error);
+            alert('Failed to import Word document. Please ensure it is a valid .docx file.');
         }
     };
 
@@ -239,17 +264,28 @@ export default function AdminBlogsPage() {
                         /* Editor View */
                         <div className="flex gap-8">
                             <div className="flex-grow max-w-[800px] space-y-6">
+                                <div className="flex items-center justify-end">
+                                    <label className="cursor-pointer flex items-center gap-2 px-4 py-2 bg-[#ee7c2b]/10 hover:bg-[#ee7c2b]/20 text-[#ee7c2b] rounded-lg text-sm font-bold transition-all border border-[#ee7c2b]/20">
+                                        <span className="material-symbols-outlined text-lg">upload_file</span>
+                                        Import from Word
+                                        <input
+                                            type="file"
+                                            accept=".docx"
+                                            className="hidden"
+                                            onChange={handleWordImport}
+                                        />
+                                    </label>
+                                </div>
                                 <input
                                     className="w-full text-4xl font-bold font-display border-none focus:ring-0 placeholder-gray-300 dark:placeholder-gray-600 bg-transparent p-0 text-[#181411] dark:text-white"
                                     placeholder="Post Title"
                                     value={currentBlog.title || ''}
                                     onChange={(e) => setCurrentBlog({ ...currentBlog, title: e.target.value })}
                                 />
-                                <textarea
-                                    className="w-full min-h-[400px] border border-[#e6e0db] dark:border-[#3d2e23] rounded-lg p-4 text-lg leading-relaxed placeholder-gray-300 dark:placeholder-gray-600 bg-white dark:bg-[#2d221a] resize-none focus:ring-[#ee7c2b] focus:border-[#ee7c2b] text-[#181411] dark:text-[#dcd6d0]"
-                                    placeholder="Begin your heritage story here..."
+                                <Editor
                                     value={currentBlog.content || ''}
-                                    onChange={(e) => setCurrentBlog({ ...currentBlog, content: e.target.value })}
+                                    onChange={(content) => setCurrentBlog({ ...currentBlog, content })}
+                                    placeholder="Begin your heritage story here..."
                                 />
                             </div>
 

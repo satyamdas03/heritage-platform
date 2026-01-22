@@ -62,13 +62,11 @@ export default async function BlogDetailPage({ params }: { params: Promise<{ id:
                 </div>
 
                 {/* Content */}
-                <article className="prose prose-lg dark:prose-invert max-w-none">
-                    {blog.content.split('\n').map((paragraph, index) => (
-                        <p key={index} className="mb-4 leading-relaxed text-lg">
-                            {paragraph}
-                        </p>
-                    ))}
-                </article>
+                {/* Content */}
+                <article
+                    className="prose prose-lg dark:prose-invert max-w-none [&_img]:rounded-xl [&_img]:shadow-md"
+                    dangerouslySetInnerHTML={{ __html: blog.content }}
+                />
 
                 {/* Tags */}
                 {tags.length > 0 && (

@@ -49,7 +49,7 @@ export default async function BlogsPage() {
                                         {featuredBlog.title}
                                     </h2>
                                     <p className="text-[#897261] dark:text-gray-400 mb-6 text-lg leading-relaxed">
-                                        {featuredBlog.excerpt || featuredBlog.content.substring(0, 150) + '...'}
+                                        {featuredBlog.excerpt || featuredBlog.content.replace(/<[^>]+>/g, '').substring(0, 150) + '...'}
                                     </p>
                                     <div className="flex items-center justify-between mt-auto">
                                         <span className="text-sm text-[#897261] dark:text-gray-500 font-medium">
@@ -90,7 +90,7 @@ export default async function BlogsPage() {
                                             {blog.title}
                                         </h4>
                                         <p className="text-[#897261] dark:text-gray-400 text-sm mb-4 line-clamp-2">
-                                            {blog.excerpt || blog.content.substring(0, 100) + '...'}
+                                            {blog.excerpt || blog.content.replace(/<[^>]+>/g, '').substring(0, 100) + '...'}
                                         </p>
                                         <div className="flex items-center justify-between">
                                             <span className="text-xs text-[#897261] uppercase font-bold tracking-tighter">

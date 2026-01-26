@@ -6,6 +6,7 @@ import { Navbar } from "@/components/Navbar";
 import { SecondaryNavbar } from "@/components/SecondaryNavbar";
 import { Footer } from "@/components/Footer";
 import { auth } from "@/auth";
+import { CartProvider } from "@/context/CartContext";
 
 const notoSerif = Noto_Serif({
   variable: "--font-noto-serif",
@@ -40,12 +41,14 @@ export default async function RootLayout({
         className={`${notoSerif.variable} ${notoSans.variable} antialiased bg-background-light dark:bg-background-dark text-text-main dark:text-white font-body`}
       >
         <Providers>
-          <div className="relative flex min-h-screen flex-col">
-            <Navbar user={session?.user} />
-            <SecondaryNavbar />
-            <main className="flex-1">{children}</main>
-            <Footer />
-          </div>
+          <CartProvider>
+            <div className="relative flex min-h-screen flex-col">
+              <Navbar user={session?.user} />
+              <SecondaryNavbar />
+              <main className="flex-1">{children}</main>
+              <Footer />
+            </div>
+          </CartProvider>
         </Providers>
       </body>
     </html>

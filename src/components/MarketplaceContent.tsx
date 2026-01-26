@@ -3,6 +3,7 @@
 import React, { useState, useMemo, useEffect } from 'react';
 import Link from 'next/link';
 import { PRODUCTS, Product } from '@/data/products';
+import ProductDetailModal from './ProductDetailModal';
 
 const CATEGORIES = ['All Artifacts', 'Textile', 'Saree', 'Stole', 'Fabric', 'Jewellery', 'Home Decor', 'Ayurveda Corner'];
 
@@ -16,6 +17,8 @@ export default function MarketplaceContent() {
     useEffect(() => {
         setMounted(true);
     }, []);
+
+    const [selectedProduct, setSelectedProduct] = useState<Product | null>(null);
 
     // Filter and Sort/Interleave Logic
     const displayedProducts = useMemo(() => {
@@ -75,6 +78,10 @@ export default function MarketplaceContent() {
         }
     }
 
+    const handleProductClick = (product: Product) => {
+        setSelectedProduct(product);
+    };
+
     if (!mounted) return null;
 
     return (
@@ -85,7 +92,7 @@ export default function MarketplaceContent() {
                     <div
                         className="absolute inset-0 bg-cover bg-center opacity-70"
                         style={{
-                            backgroundImage: `url('https://lh3.googleusercontent.com/aida-public/AB6AXuDvBIzdliePF_to7fG0oBtPs_n8JcXCq1eWW1y2S64YFBM8SDD2aIk_UoJv-86_dAoDayE3IfNw6RhfO3rsZXxPPm8bSGhySORona1KFJWFEApU6lvFGlFIbnjc0SO-CqIOtsMQ6qnUacAWhcsYweRbZWDlhS-qSOYKTNT7p9GMvKDSgaLc5AwOLWLCVGCaeQmJjFrwv_jSyREdNL8qXdCMgPcWQ7gUFtJqC-2FV2gzWcJK7BY27AdpmTu6fhjH8c-SzdWAiFG-fCY')`,
+                            backgroundImage: `url('https://lh3.googleusercontent.com/aida-public/AB6AXuDvBIzdliePF_to7fG0oBtPs_n8JcXCq1eWW1y2S64YFBM8SDD2aIk_UoJv-86_dAoDayE3IfNw6RhfO3rsZXxPPm8bSGhySORona1KFJWFEApU6lvGGlFIbnjc0SO-CqIOtsMQ6qnUacAWhcsYweRbZWDlhS-qSOYKTNT7p9GMvKDSgaLc5AwOLWLCVGCaeQmJjFrwv_jSyREdNL8qXdCMgPcWQ7gUFtJqC-2FV2gzWcJK7BY27AdpmTu6fhjH8c-SzdWAiFG-fCY')`,
                         }}
                     ></div>
                     <div className="absolute inset-0 bg-gradient-to-r from-stone-900/90 via-stone-900/40 to-transparent"></div>
@@ -154,14 +161,18 @@ export default function MarketplaceContent() {
                         ) : (
                             <div className="grid grid-cols-1 md:grid-cols-2 xl:grid-cols-3 gap-x-6 gap-y-10">
                                 {paginatedProducts.map((product) => (
-                                    <div key={product.id} className="group flex flex-col bg-transparent cursor-pointer">
+                                    <div
+                                        key={product.id}
+                                        className="group flex flex-col bg-transparent cursor-pointer"
+                                        onClick={() => handleProductClick(product)}
+                                    >
                                         <div className="relative aspect-[4/5] overflow-hidden rounded-lg bg-stone-100 dark:bg-stone-800 mb-4">
                                             <div
                                                 className="absolute inset-0 bg-cover bg-center transition-transform duration-700 group-hover:scale-105"
-                                                style={{ backgroundImage: `url('${product.image}')` }}
+                                                style={{ backgroundImage: `url('${product.images[0]}')` }}
                                             ></div>
                                             <button className="absolute top-3 right-3 flex h-8 w-8 items-center justify-center rounded-full bg-white text-stone-400 hover:text-[#9f1239] shadow-sm transition-colors opacity-0 group-hover:opacity-100 translate-y-2 group-hover:translate-y-0 duration-300">
-                                                <span className="material-symbols-outlined text-[18px]">favorite</span>
+                                                <span className="material-symbols-outlined text-[18px]">visibility</span>
                                             </button>
                                         </div>
                                         <div className="flex flex-col gap-1">
@@ -209,6 +220,12 @@ export default function MarketplaceContent() {
                     </div>
                 </div>
             </main>
+
+            <ProductDetailModal
+                isOpen={!!selectedProduct}
+                onClose={() => setSelectedProduct(null)}
+                product={selectedProduct}
+            />
         </div>
     );
 }

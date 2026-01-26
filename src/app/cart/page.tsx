@@ -1,81 +1,22 @@
 'use client';
-import React, { useState } from 'react'; // Simple local state for demo
+import React, { useState } from 'react';
 import Link from 'next/link';
-
-// Mock initial cart data for demo purposes since we don't have a global cart context yet
-const INITIAL_CART = [
-    {
-        id: '1',
-        title: 'Bankura Horse Pair',
-        artisan: 'Manik Lal',
-        price: 1250,
-        image: 'https://lh3.googleusercontent.com/aida-public/AB6AXuCAXhhrYAVYt5CoLnx0lX2IbWPg6aPQR65cLCq1vzTj47-t-ylUncG3anRQTZJvXstjTSMNUCIMqJygMvprOc_jIsDelXJqwjtucfeNqoMQTyHquA8ZIPzyW6tCbYOxXcgNR2PtMyDK30W3TC1hBf3uXylG0Sog5UdHtlZ6Z1Oq9Yy2BZ-gM2ba0knehjrmrpto-J320c9Gg_7gg_iCZ2AmTVCcWbBXqDxmQEuOEwPLHa-IQ9bGazC-i4Us2PDL-ZwesWD0qG0gRw0',
-        quantity: 1
-    },
-    {
-        id: '2',
-        title: 'Hand-Stitched Kantha Stole',
-        artisan: 'Rina Begum',
-        price: 3400,
-        image: 'https://lh3.googleusercontent.com/aida-public/AB6AXuCV_vQ2NqZ_uXQdZ5yM5g8xZ_K5g8xZ_K5g8xZ_K5g8xZ_K5g8xZ_K5g8xZ_K5g8xZ_K5g8xZ_K5g8xZ_K5g8xZ_K5g8xZ_K5g8xZ_K5g8xZ_K5g8xZ_K5g8xZ_K5g8xZ_K5g8xZ_K5g8xZ_K5g8xZ_K5g8xZ_K5g8xZ_K5g8xZ_K5g8xZ_', // Placeholder if broken
-        quantity: 2
-    }
-];
+import { useCart } from '@/context/CartContext';
 
 export default function CartPage() {
-    const [cartItems, setCartItems] = useState(INITIAL_CART);
+    const { cartItems, removeFromCart, updateQuantity, subtotal } = useCart();
     const [loading, setLoading] = useState(false);
 
-    const subtotal = cartItems.reduce((sum, item) => sum + (item.price * item.quantity), 0);
     const shipping = 150;
-    const total = subtotal + shipping;
-
-    const updateQuantity = (id: string, change: number) => {
-        setCartItems(prev => prev.map(item => {
-            if (item.id === id) {
-                const newQty = Math.max(1, item.quantity + change);
-                return { ...item, quantity: newQty };
-            }
-            return item;
-        }));
-    };
-
-    const removeItem = (id: string) => {
-        setCartItems(prev => prev.filter(item => item.id !== id));
-    };
+    const total = subtotal > 0 ? subtotal + shipping : 0;
 
     const handleCheckout = async () => {
         setLoading(true);
-        try {
-            const response = await fetch('/api/checkout', {
-                method: 'POST',
-                headers: {
-                    'Content-Type': 'application/json',
-                },
-                body: JSON.stringify({
-                    items: cartItems.map(item => ({
-                        title: item.title,
-                        price: item.price,
-                        quantity: item.quantity,
-                        imageUrl: item.image
-                    })),
-                    type: 'cart'
-                }),
-            });
-
-            const data = await response.json();
-            if (data.url) {
-                window.location.href = data.url;
-            } else {
-                console.error('Checkout failed:', data);
-                alert(`Checkout failed: ${data.error || 'Unknown error'}`);
-                setLoading(false);
-            }
-        } catch (error) {
-            console.error(error);
+        // Simulate checkout
+        setTimeout(() => {
+            alert('Proceeding to payment gateway...');
             setLoading(false);
-            alert('An error occurred during checkout.');
-        }
+        }, 1500);
     };
 
     if (cartItems.length === 0) {
@@ -105,7 +46,7 @@ export default function CartPage() {
                                     <div className="flex-1">
                                         <div className="flex justify-between items-start">
                                             <h3 className="font-bold text-lg">{item.title}</h3>
-                                            <button onClick={() => removeItem(item.id)} className="text-slate-400 hover:text-red-500"><span className="material-symbols-outlined">delete</span></button>
+                                            <button onClick={() => removeFromCart(item.id)} className="text-slate-400 hover:text-red-500"><span className="material-symbols-outlined">delete</span></button>
                                         </div>
                                         <p className="text-sm text-slate-500 dark:text-slate-400 mb-2">By {item.artisan}</p>
                                         <div className="flex items-center justify-between mt-2">
@@ -144,7 +85,7 @@ export default function CartPage() {
                             <button
                                 onClick={handleCheckout}
                                 disabled={loading}
-                                className="w-full bg-[#1313ec] hover:bg-blue-700 text-white font-bold py-3 rounded-lg flex items-center justify-center gap-2 transition-all disabled:opacity-75 disabled:cursor-wait"
+                                className="w-full bg-[#9f1239] hover:bg-[#881030] text-white font-bold py-3 rounded-lg flex items-center justify-center gap-2 transition-all disabled:opacity-75 disabled:cursor-wait"
                             >
                                 {loading ? 'Processing...' : (
                                     <>
